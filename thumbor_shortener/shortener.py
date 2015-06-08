@@ -3,6 +3,21 @@
 
 class Shortener(object):
 
+    def __init__(self, context):
+        '''
+        :param context: CommunityContext
+        '''
+
+        self.context = context
+
+    def generate(self, url):
+        '''
+        :param url:
+        :return:
+        :rtype: string
+        '''
+        return self.context.shortener_generator.get(url)
+
     def get(self, key):
         '''
         Get the url assigned to the key.
@@ -12,10 +27,7 @@ class Shortener(object):
         :rtype: string
         '''
 
-        # TODO Use a backend to fetch the value of key.
-        # ex: backend.get(key). Backends should be abstracted to support
-        # different storages (SQL, Redis, Memcache, Riak, etc. )
-        pass
+        return self.context.shortener_backend.get(key)
 
     def put(self, key, url):
         '''
@@ -24,6 +36,4 @@ class Shortener(object):
         :param url:
         '''
 
-        # TODO Use a backend to store the value of key + url
-        
-        pass
+        return self.context.shortener_backend.put(key, url)
