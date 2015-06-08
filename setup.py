@@ -10,12 +10,13 @@ setup(
     license='MIT',
     author='Thumbor Community',
     description='URL Shortener',
-    packages=['thumbor_community.shortener'],
+    packages=['thumbor_shortener'],
     include_package_data=True,
     zip_safe=False,
     platforms='any',
     install_requires=[
         'thumbor',
+        'thumbor_community'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
