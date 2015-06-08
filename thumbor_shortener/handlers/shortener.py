@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import re
+
 from thumbor.handlers.imaging import ImagingHandler
 from thumbor.url import Url
 
@@ -9,9 +11,13 @@ from thumbor_shortener.context import CommunityContext
 
 class UrlShortenerHandler(ImagingHandler):
 
-    @class_method
+    @classmethod
     def regex():
-        pass
+        '''
+        :return: The regex used for routing.
+        :rtype: string
+        '''
+        return '/shortener/(?P<key>.+)'
 
     def get(self):
 

@@ -5,7 +5,7 @@ class Shortener(object):
 
     def __init__(self, context):
         '''
-        :param context: CommunityContext
+        :param context: an instance of `CommunityContext`
         '''
 
         self.context = context
@@ -16,18 +16,18 @@ class Shortener(object):
         :return:
         :rtype: string
         '''
-        return self.context.shortener_generator.get(url)
+        return self.context.modules.shortener_generator.get(url)
 
     def get(self, key):
         '''
         Get the url assigned to the key.
 
-        :param key: string
+        :param key: a short url code
         :return:
         :rtype: string
         '''
 
-        return self.context.shortener_backend.get(key)
+        return self.context.modules.shortener_backend.get(key)
 
     def put(self, key, url):
         '''
@@ -36,4 +36,4 @@ class Shortener(object):
         :param url:
         '''
 
-        return self.context.shortener_backend.put(key, url)
+        return self.context.modules.shortener_backend.put(key, url)
