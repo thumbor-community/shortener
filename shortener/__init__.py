@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from .context import CommunityExtensions
+from thumbor_community import CommunityExtensions
 
 
 CommunityExtensions.register_module(
