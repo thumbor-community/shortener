@@ -45,7 +45,11 @@ class Storage(BaseStorage):
         if self.shared_client and Storage.storage:
             return Storage.storage
 
-        password = self.context.config.SHORTENER_REDIS_STORAGE_SERVER_PASSWORD
+        password = self.context.config.get(
+            'SHORTENER_REDIS_STORAGE_SERVER_PASSWORD',
+            None
+        )
+
         storage = Redis(
             port=self.context.config.SHORTENER_REDIS_STORAGE_SERVER_PORT,
             host=self.context.config.SHORTENER_REDIS_STORAGE_SERVER_HOST,

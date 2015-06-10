@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import re
+import os.path
+import tornado.gen as gen
+import tornado.web
+import urlparse
 
 from thumbor.handlers.imaging import ImagingHandler
-from thumbor.url import Url
 
-from thumbor_community.context import Context
 from thumbor_shortener.shortener import Shortener
+from thumbor_community.web import RequestParser
 
 
 class UrlShortenerHandler(ImagingHandler):
@@ -17,19 +19,32 @@ class UrlShortenerHandler(ImagingHandler):
         :return: The regex used for routing.
         :rtype: string
         '''
-        return '/shortener/(?P<key>.+)'
+        return r'/shortener/(?P<key>.+)'
 
+    @gen.coroutine
     def get(self, **kwargs):
 
         shortener = Shortener(self.context)
 
         # Get the url from the shortener and parse the values.
-        url = shortener.get(kwargs['key'])
+        url = yield gen.maybe_future(shortener.get(kwargs['key']))
 
         if not url:
             raise tornado.web.HTTPError(404)
 
-        options = Url.parse_decrypted(url)
+        # Patch the request uri to allow normal thumbor operations
+        self.request.uri = urlparse.urlparse(url).path
+
+        options = RequestParser.path_to_parameters(self.request.uri)
+
+        name = os.path.basename(options.get('image', None))
+        if name:
+            self.set_header(
+                'Content-Disposition',
+                'inline; filename="{name}"'.format(
+                    name=name
+                )
+            )
 
         # Call the original ImageHandler.get method to serve the image.
-        return super(UrlShortenerHandler, self).get(**options)
+        super(UrlShortenerHandler, self).get(**options)
