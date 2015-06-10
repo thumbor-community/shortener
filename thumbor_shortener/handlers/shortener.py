@@ -19,14 +19,13 @@ class UrlShortenerHandler(ImagingHandler):
         '''
         return '/shortener/(?P<key>.+)'
 
-    def get(self):
+    def get(self, **kwargs):
 
-        context = CommunityContext(self.context)
-
-        shortener = Shortener(context)
+        print(self.context)
+        shortener = Shortener(self.context)
 
         # Get the url from the shortener and parse the values.
-        url = shortener.get(self.request.path)
+        url = shortener.get(kwargs['key'])
 
         if not url:
             # TODO Throw a 404
