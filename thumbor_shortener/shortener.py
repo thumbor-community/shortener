@@ -27,7 +27,7 @@ class Shortener(object):
         :rtype: string
         '''
 
-        return self.context.modules.shortener_backend.get(key)
+        return self.context.modules.shortener_storage.get(key)
 
     def put(self, key, url):
         '''
@@ -36,4 +36,4 @@ class Shortener(object):
         :param url:
         '''
 
-        return self.context.modules.shortener_backend.put(key, url)
+        return self.context.modules.shortener_storage.put(key, url)

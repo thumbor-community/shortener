@@ -19,12 +19,6 @@ extension.add_module(
     multiple=False
 )
 
-extension.add_module(
-    config_key='SHORTENER_BACKEND',
-    class_name='Backend',
-    multiple=False
-)
-
 # Register the route
 extension.add_handler(UrlShortenerHandler.regex(), UrlShortenerHandler)
 
