@@ -1,49 +1,31 @@
 # -*- coding: utf-8 -*-
 
 
-from thumbor_community import CommunityExtensions
+from thumbor_community import Extension, Extensions
+from thumbor_shortener.handlers.shortener import UrlShortenerHandler
 
+extension = Extension('shortener')
 
-CommunityExtensions.register_module(
+# Register the required modules
+extension.add_module(
+    config_key='SHORTENER_GENERATOR',
+    class_name='Generator',
+    multiple=False
+)
+
+extension.add_module(
     config_key='SHORTENER_STORAGE',
     class_name='Storage',
     multiple=False
 )
 
+extension.add_module(
+    config_key='SHORTENER_BACKEND',
+    class_name='Backend',
+    multiple=False
+)
 
-class Shortener(object):
+# Register the route
+extension.add_handler(UrlShortenerHandler.regex(), UrlShortenerHandler)
 
-    def __init__(self, context):
-        '''
-        :param context: an instance of `CommunityContext`
-        '''
-
-        self.context = context
-
-    def generate(self, url):
-        '''
-        :param url:
-        :return:
-        :rtype: string
-        '''
-        return self.context.modules.shortener_generator.get(url)
-
-    def get(self, key):
-        '''
-        Get the url assigned to the key.
-
-        :param key: a short url code
-        :return:
-        :rtype: string
-        '''
-
-        return self.context.modules.shortener_backend.get(key)
-
-    def put(self, key, url):
-        '''
-        Store the url
-        :param key:
-        :param url:
-        '''
-
-        return self.context.modules.shortener_backend.put(key, url)
+Extensions.register(extension)

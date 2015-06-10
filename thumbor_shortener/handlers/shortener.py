@@ -5,14 +5,14 @@ import re
 from thumbor.handlers.imaging import ImagingHandler
 from thumbor.url import Url
 
+from thumbor_community.context import Context
 from thumbor_shortener.shortener import Shortener
-from thumbor_shortener.context import CommunityContext
 
 
 class UrlShortenerHandler(ImagingHandler):
 
     @classmethod
-    def regex():
+    def regex(cls):
         '''
         :return: The regex used for routing.
         :rtype: string
