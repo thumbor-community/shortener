@@ -13,5 +13,4 @@ class Generator(BaseGenerator):
         :rtype: string
         '''
 
-        return hashlib.sha256(key).hexdigest()
-
+        return hashlib.sha256(url).hexdigest()

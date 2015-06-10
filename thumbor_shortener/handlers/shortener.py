@@ -21,15 +21,13 @@ class UrlShortenerHandler(ImagingHandler):
 
     def get(self, **kwargs):
 
-        print(self.context)
         shortener = Shortener(self.context)
 
         # Get the url from the shortener and parse the values.
         url = shortener.get(kwargs['key'])
 
         if not url:
-            # TODO Throw a 404
-            pass
+            raise tornado.web.HTTPError(404)
 
         options = Url.parse_decrypted(url)
 
