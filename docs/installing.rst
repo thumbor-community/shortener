@@ -19,8 +19,8 @@ Installing Thumbor Community Shortener
 
 7. Configure the extension within the same file:
 ::
-    SHORTENER_GENERATOR = 'Generator'   # Shortener generator class name, defaults to Generator
-    SHORTENER_STORAGE   = 'Storage'     # Shortener storage class name, defaults to Storage
+    SHORTENER_GENERATOR = 'tc_shortener.storages.redis_storage'         # Shortener generator class name
+    SHORTENER_STORAGE   = 'tc_shortener.generators.sha256_generator'    # Shortener storage class name
 
 7. Launch thumbor with the Thumbor Community custom application:
 ::
