@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import hashlib
 
-from thumbor_shortener.generators import BaseGenerator
+from tc_shortener.generators import BaseGenerator
 
 
 class Generator(BaseGenerator):

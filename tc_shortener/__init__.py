@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 
-from thumbor_community import Extension, Extensions
-from thumbor_shortener.handlers.shortener import UrlShortenerHandler
+from tc_core import Extension, Extensions
+from tc_shortener.handlers.shortener import UrlShortenerHandler
 
 extension = Extension('shortener')
 

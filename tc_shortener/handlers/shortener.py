@@ -7,8 +7,8 @@ import urlparse
 
 from thumbor.handlers.imaging import ImagingHandler
 
-from thumbor_shortener.shortener import Shortener
-from thumbor_community.web import RequestParser
+from tc_shortener.shortener import Shortener
+from tc_core.web import RequestParser
 
 
 class UrlShortenerHandler(ImagingHandler):
