@@ -7,7 +7,7 @@ from redis import Redis, RedisError
 from thumbor.utils import on_exception
 from tornado.concurrent import return_future
 
-from thumbor_shortener.storages import BaseStorage
+from tc_shortener.storages import BaseStorage
 
 logger = logging.getLogger('thumbor')
 

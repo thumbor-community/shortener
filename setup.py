@@ -4,19 +4,19 @@ from setuptools import setup
 
 
 setup(
-    name='thumbor_community.shortener',
+    name='tc_shortener',
     version='0.1',
-    url='http://github.com/thumbor_community/shortener',
+    url='http://github.com/thumbor-community/shortener',
     license='MIT',
     author='Thumbor Community',
     description='URL Shortener',
-    packages=['thumbor_shortener'],
+    packages=['tc_shortener'],
     include_package_data=True,
     zip_safe=False,
     platforms='any',
     install_requires=[
         'thumbor',
-        'thumbor_community'
+        'tc_core'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
