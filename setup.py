@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 setup(
@@ -10,7 +10,7 @@ setup(
     license='MIT',
     author='Thumbor Community',
     description='URL Shortener',
-    packages=['tc_shortener'],
+    packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
     platforms='any',
