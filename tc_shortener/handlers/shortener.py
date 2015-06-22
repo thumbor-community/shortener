@@ -8,6 +8,7 @@ import os.path
 import tornado.gen as gen
 import tornado.web
 import urlparse
+import json
 
 from thumbor.handlers.imaging import ImagingHandler
 
@@ -23,7 +24,7 @@ class UrlShortenerHandler(ImagingHandler):
         :return: The regex used for routing.
         :rtype: string
         '''
-        return r'/shortener/(?P<key>.+)'
+        return r'/shortener/(?P<key>.+)?'
 
     @gen.coroutine
     def get(self, **kwargs):
@@ -52,3 +53,24 @@ class UrlShortenerHandler(ImagingHandler):
 
         # Call the original ImageHandler.get method to serve the image.
         super(UrlShortenerHandler, self).get(**options)
+
+    @gen.coroutine
+    def post(self, **kwargs):
+
+        # URL can be passed as a URL argument or in the body
+        url = kwargs['url'] if 'url' in kwargs else kwargs['key']
+
+        if not url:
+            raise tornado.web.HTTPError(404)
+
+        options = RequestParser.path_to_parameters(url)
+
+        self.check_image(options)
+
+        # We check the status code, if != 200 the image is incorrect, and we shouldn't store the key
+        if self.get_status() == 200:
+            shortener = Shortener(self.context)
+            key = yield gen.maybe_future(shortener.generate(url))
+            shortener.put(key, url)
+
+            self.write(json.dumps({'key': key}))
