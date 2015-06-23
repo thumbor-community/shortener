@@ -69,6 +69,7 @@ class UrlShortenerHandler(ImagingHandler):
 
         # We check the status code, if != 200 the image is incorrect, and we shouldn't store the key
         if self.get_status() == 200:
+            self.clear()
             shortener = Shortener(self.context)
             key = yield gen.maybe_future(shortener.generate(url))
             shortener.put(key, url)
