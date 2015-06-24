@@ -4,10 +4,9 @@
 # Use of this source code is governed by the MIT license that can be
 # found in the LICENSE file.
 
-import hashlib
+import shortuuid as shortuuid
 
 from tc_shortener.generators import BaseGenerator
-
 
 class Generator(BaseGenerator):
 
@@ -17,8 +16,8 @@ class Generator(BaseGenerator):
     def shorten(self, url):
         '''
         :param url: A url to be shortened.
-        :return: SHA-256 hex of the url
+        :return: Short UUID for given URL
         :rtype: string
         '''
 
-        return hashlib.sha256(url).hexdigest()
+        return shortuuid.uuid(url)
