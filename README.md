@@ -13,4 +13,4 @@ This extension provides an URL shortener for thumbor URLs.
 
 ## Documentation
 
-Documentation is ongoing. You may see it at [Read the Docs](http://thumbor-community-shortener.readthedocs.org/en/latest/). Feel free to contribute to improve it!
+Documentation is ongoing. You may see it at [Read the Docs](http://thumbor-shortener.readthedocs.org/en/latest/). Feel free to contribute to improve it!
