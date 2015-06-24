@@ -29,7 +29,7 @@ class BaseGenerator(object):
 
             result = result.groupdict()
 
-            image = "/{image}".format(image = result['image'])
+            image = "/{image}".format(image=result['image'])
 
         return "{hash}{image}".format(
             hash=self.shorten(url),
