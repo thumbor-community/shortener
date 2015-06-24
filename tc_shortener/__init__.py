@@ -24,9 +24,10 @@ extension.add_module(
     multiple=False
 )
 
-Config.define('SHORTENER_GENERATOR', 'tc_shortener.generators.sha256_generator', 'Shortened URL generator class.', 'Shortener')
+Config.define('SHORTENER_GENERATOR', 'tc_shortener.generators.short_generator',  'Shortened URL generator class.', 'Shortener')
 Config.define('SHORTENER_STORAGE',   'tc_shortener.storages.redis_storage',      'Shortened URL storage.',         'Shortener')
 
+Config.define('SHORTENER_GENERATOR_PRESERVE_NAME', True, 'Should the URL generator preserve the image name in the URL?', 'Shortener')
 
 Config.define('SHORTENER_REDIS_STORAGE_SERVER_HOST',     'localhost', 'Redis hostname.',           'Shortener')
 Config.define('SHORTENER_REDIS_STORAGE_SERVER_PORT',     6379,        'Redis port.',               'Shortener')

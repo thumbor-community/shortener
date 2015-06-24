@@ -16,7 +16,8 @@ setup(
     platforms='any',
     install_requires=[
         'thumbor',
-        'tc_core'
+        'tc_core',
+        'shortuuid'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
