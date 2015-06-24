@@ -6,7 +6,7 @@ This extension provides an URL shortener for thumbor URLs.
 
 ## Features
 
-* API to generate shortened URLs (work in progress)
+* API to generate shortened URLs
 * Based on a shortened URL, returns the image
 * Stores the shortened URLs within Redis (more storages to come)
 * Customizable generation logic

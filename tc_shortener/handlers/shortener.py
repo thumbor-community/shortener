@@ -11,6 +11,7 @@ import urlparse
 import json
 
 from thumbor.handlers.imaging import ImagingHandler
+from thumbor.utils import logger
 
 from tc_shortener.shortener import Shortener
 from tc_core.web import RequestParser
@@ -18,13 +19,15 @@ from tc_core.web import RequestParser
 
 class UrlShortenerHandler(ImagingHandler):
 
+    should_return_image = True
+
     @classmethod
     def regex(cls):
         '''
         :return: The regex used for routing.
         :rtype: string
         '''
-        return r'/shortener/(?P<key>.+)?'
+        return r'/shortener/?(?P<key>.+)?'
 
     @gen.coroutine
     def get(self, **kwargs):
@@ -56,22 +59,35 @@ class UrlShortenerHandler(ImagingHandler):
 
     @gen.coroutine
     def post(self, **kwargs):
+        self.should_return_image = False
 
         # URL can be passed as a URL argument or in the body
         url = kwargs['url'] if 'url' in kwargs else kwargs['key']
 
         if not url:
+            logger.error("Couldn't find url param in body or key in URL...")
             raise tornado.web.HTTPError(404)
 
         options = RequestParser.path_to_parameters(url)
 
-        self.check_image(options)
+        yield self.check_image(options)
 
         # We check the status code, if != 200 the image is incorrect, and we shouldn't store the key
         if self.get_status() == 200:
+            logger.debug("Image is checked, clearing the response before trying to store...")
             self.clear()
-            shortener = Shortener(self.context)
-            key = yield gen.maybe_future(shortener.generate(url))
-            shortener.put(key, url)
+            try:
+                shortener = Shortener(self.context)
+                key = shortener.generate(url)
+                shortener.put(key, url)
 
-            self.write(json.dumps({'key': key}))
+                self.write(json.dumps({'key': key}))
+            except Exception as e:
+                logger.error("An error occurred while trying to store shortened URL: {error}.".format(error=e.message))
+                self.set_status(500)
+                self.write(json.dumps({'error': e.message}))
+
+    @gen.coroutine
+    def execute_image_operations(self):
+        if self.should_return_image:
+            super(UrlShortenerHandler, self).execute_image_operations()
