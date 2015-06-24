@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='tc_shortener',
-    version='0.1',
+    version='0.2',
     url='http://github.com/thumbor-community/shortener',
     license='MIT',
     author='Thumbor Community',
