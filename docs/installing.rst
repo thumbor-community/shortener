@@ -13,7 +13,7 @@ Installing Thumbor Community Shortener
 6. Register the extension within Thumbor's configuration file:
 ::
     COMMUNITY_EXTENSIONS = [
-        'shortener',
+        'tc_shortener',
         ...
     ]
 
