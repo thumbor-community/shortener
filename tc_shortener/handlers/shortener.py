@@ -82,6 +82,7 @@ class UrlShortenerHandler(ImagingHandler):
                 shortener.put(key, url)
 
                 self.write(json.dumps({'key': key}))
+                self.set_header("Content-Type", "application/json")
             except Exception as e:
                 logger.error("An error occurred while trying to store shortened URL: {error}.".format(error=e.message))
                 self.set_status(500)
