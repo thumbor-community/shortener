@@ -19,6 +19,12 @@ setup(
         'tc_core',
         'shortuuid'
     ],
+    extras_require={
+        'tests': [
+            'pyvows',
+            'coverage',
+        ],
+    },
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

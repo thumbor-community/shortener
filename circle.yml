@@ -1,0 +1,11 @@
+dependencies:
+  override:
+    - gem install fpm
+    - make setup
+
+test:
+  override:
+    - make pyvows_run
+  post:
+    - fpm -s python -t deb --iteration 1 --no-python-dependencies -d python-dateutil -d thumbor -d python-boto --python-install-lib /usr/lib/python2.7/dist-packages -x "*.pyc" ./setup.py
+    - mv ./*.deb $CIRCLE_ARTIFACTS
