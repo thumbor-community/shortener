@@ -1,1 +1,4 @@
 redis
+shortuuid
+tc_core
+thumbor
