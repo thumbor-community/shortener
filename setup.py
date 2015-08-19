@@ -17,7 +17,8 @@ setup(
     install_requires=[
         'thumbor',
         'tc_core',
-        'shortuuid'
+        'shortuuid',
+        'redis',
     ],
     extras_require={
         'tests': [
