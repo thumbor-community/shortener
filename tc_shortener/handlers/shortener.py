@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (c) 2015, thumbor-community
+# Copyright (c) 2016, thumbor-community
 # Use of this source code is governed by the MIT license that can be
 # found in the LICENSE file.
 
@@ -61,12 +61,19 @@ class UrlShortenerHandler(ImagingHandler):
     def post(self, **kwargs):
         self.should_return_image = False
 
-        # URL can be passed as a URL argument or in the body
-        url = kwargs['url'] if 'url' in kwargs else kwargs['key']
+        content_type = self.request.headers.get("Content-Type", '')
+
+        if 'key' in kwargs and kwargs['key']:
+            url = kwargs['key']
+        elif content_type.startswith("application/json"):
+            data = json.loads(self.request.body)
+            url = data['url'] if 'url' in data else None
+        else:
+            url = self.get_body_argument('url', None)
 
         if not url:
             logger.error("Couldn't find url param in body or key in URL...")
-            raise tornado.web.HTTPError(404)
+            raise tornado.web.HTTPError(400)
 
         options = RequestParser.path_to_parameters(url)
 

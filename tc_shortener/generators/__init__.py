@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (c) 2015, thumbor-community
+# Copyright (c) 2016, thumbor-community
 # Use of this source code is governed by the MIT license that can be
 # found in the LICENSE file.
-
+import os
 import re
 
 from thumbor.url import Url
+
 
 class BaseGenerator(object):
 
@@ -24,12 +25,12 @@ class BaseGenerator(object):
             reg = re.compile(Url.regex())
             result = reg.match(url)
 
-            if result == None:
+            if result is None:
                 raise ValueError("URL does not match thumbor's URL pattern")
 
             result = result.groupdict()
 
-            image = "/{image}".format(image=result['image'])
+            image = "/{image}".format(image=os.path.basename(result['image']))
 
         return "{hash}{image}".format(
             hash=self.shorten(url),
